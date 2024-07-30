@@ -17,15 +17,35 @@ class Food_helpController extends Controller
             // show month number without 0 in front
             $currentMonth = Carbon::now()->format('m');
             // convert currentMonth in date to string
-            $currentMonth = Carbon::createFromFormat('m', $currentMonth)->toDateString();
-            $donors = Donor::leftJoin('payments', function($join) use ($currentMonth) {
+            $currentMonths = Carbon::createFromFormat('m', $currentMonth)->toDateString();
+            $donors = Donor::leftJoin('payments', function($join) use ($currentMonths) {
                 $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '!=', $currentMonth);
+                     ->where('payments.payment_month', '!=', $currentMonths);
             })
             ->whereNull('payments.id') // Ensure no payment for the current month
             ->select('donors.*')
             ->get();
-            return view("frontend.food_help",compact('donors'));
+
+            $paid_donner = Donor::join('payments', function($join) use ($currentMonth) {
+                $join->on('donors.id', '=', 'payments.donor_id')
+                     ->where('payments.payment_month', '=', $currentMonth);
+            })
+            ->distinct()
+            ->count('donors.id');
+
+            $unpaidDonorCount = Donor::leftJoin('payments', function($join) use ($currentMonth) {
+                $join->on('donors.id', '=', 'payments.donor_id')
+                     ->where('payments.payment_month', '=', $currentMonth);
+            })
+            ->whereNull('payments.donor_id') // Exclude donors who have made a payment in the current month
+            ->distinct()
+            ->count('donors.id');
+            $unpaid_donner = $unpaidDonorCount;
+
+            $total_donner = Donor::count();
+
+            // dd($paid_donner);
+            return view("frontend.food_help",compact('donors','paid_donner','unpaid_donner','total_donner'));
         }catch (Exception $e){
             return $e;
             return redirect()->back()->with('message', 'Something went wrong');
