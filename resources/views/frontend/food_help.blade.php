@@ -186,7 +186,7 @@
                                                                                     <td>
                                                                                         <button type="button" onclick="document.getElementById('donner_id').value = {{ $row->id }}" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>Paid</button>
                                                                                         <button type="button" data-toggle="modal" data-target="#exampleModal_update" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square">UpDate</i></button>
-                                                                                        <button class="btn btn-danger btn-sm">View Details</button>
+                                                                                        <button class="btn btn-danger btn-sm"><a class="text-white" href="{{ route('view.details',$row->id) }}">View Details</a></button>
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -235,10 +235,13 @@
                                 <div class="modal-body">
                                     <div class="form-group row">
                                         <input type="hidden" name="donor_id" id="donner_id" class="form-control">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <input type="text" name="recept_no" class="form-control" placeholder="Raseed No">
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
+                                            <input type="text" name="recept_no" class="form-control" placeholder="Raseed No">
+                                        </div>
+                                        <div class="col-sm-4">
                                             <input type="date" name="payment_date" class="form-control" placeholder="Donner Name">
                                         </div>
                                         <div class="col-sm-12 mt-4">
@@ -369,9 +372,6 @@
                 </div>
 
 
-
-
-
                 <!-- End Update Model Box here -->
 
 
@@ -382,7 +382,48 @@
 
                 <!-- End Add new donner Model Box here -->
 
+                   {{-- Start view detailes for donner  --}}
+                   <div class="modal fade" id="exampleModal_view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form action="{{ route('food_help.store') }}" method="post">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Donner Food_Help Scheme</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-light">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Month</th>
+                                                <th>Name</th>
+                                                <th>Payments</th>
+                                                <th>Pay Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td>{{ '$name' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
+                                </div>
+                                <div class="modal-footer">
+                                    <center>
+                                        <button type="submit" class="btn btn-primary d-flex justify-content-center">Add Donner</button>
+                                    </center>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                   {{-- end view detailes for donner  --}}
 
 
 

@@ -15,6 +15,8 @@ Route::post('/food_help/store', [Food_helpController::class, 'store'])->name('fo
 
 Route::post('/food_help/payments/store', [Food_helpController::class, 'store_payments'])->name('food_help.payments.store');
 
-Route::get('/view_details',[ViewController::class,'index']);
+Route::get('/payments/{id}', [Food_helpController::class, 'payments'])->name('food.help.donor.payments');
+
+Route::get('/view_details/{id}',[ViewController::class,'index'])->name('view.details');
 Route::get('/mahana_kifalat',[Mahana_kifalatController::class,'index']);
 Route::get('/qurbani',[QurbaniController::class,'index']);

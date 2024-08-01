@@ -64,31 +64,7 @@
                                                 </div>
                                             </div>
 
-                                            <div style="text-align:center;" class="col-lg-12 d-flex">
 
-                                                <div class="col-lg-3">
-
-                                                    <button
-                                                        class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Add
-                                                        New Donner</button>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <button
-                                                        class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Send
-                                                        Message</button>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <button
-                                                        class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Show
-                                                        Monthly Details</button>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <button
-                                                        class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">download
-                                                        List</button>
-                                                </div>
-
-                                            </div>
                                             <br><br>
                                             <br>
                                             <!-- Single Open Accordion ends -->
@@ -107,9 +83,7 @@
                                                         <div class="card">
                                                             <div class="card-header">
 
-                                                                <span>Search <code><input type="text"></code> <button
-                                                                        class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">download
-                                                                        Details</button></span>
+                                                                <span>NUSRAT TRUST<code></code>DONOR DETAILS</span>
                                                                 <div class="card-header-right">
                                                                     <ul class="list-unstyled card-option">
                                                                         <li><i
@@ -131,33 +105,22 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Child</th>
-                                                                                <th>Doner Details</th>
-
-                                                                                <th>Jan</th>
-                                                                                <th>Feb</th>
-                                                                                <th>Mar</th>
-                                                                                <th>April</th>
-                                                                                <th>May</th>
-                                                                                <th>Jun</th>
-                                                                                <th>July</th>
-                                                                                <th>Aug</th>
-                                                                                <th>Sep</th>
-                                                                                <th>Oct</th>
-                                                                                <th>Nov</th>
-                                                                                <th>Dec</th>
+                                                                                <th>Raseed No</th>
+                                                                                <th>Months</th>
+                                                                                <th>Payments</th>
+                                                                                <th>Payment_Date</th>
 
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr>
-
-                                                                                <td>2</td>
-                                                                                <td>Akash/0348-2248944</td>
-                                                                                <td>Res.122<br>27-7-2024</td>
-
-                                                                            </tr>
-
+                                                                            @foreach($payments as $row)
+                                                                                <tr>
+                                                                                    <td>{{ $row->recept_no }}</td>
+                                                                                    <td>{{ $row->payment_month }}</td>
+                                                                                    <td>{{ $row->amount ?? 00 }}</td>
+                                                                                    <td>{{ $row->payment_date }}</td>
+                                                                                </tr>
+                                                                            @endforeach
                                                                         </tbody>
                                                                     </table>
                                                                 </div>

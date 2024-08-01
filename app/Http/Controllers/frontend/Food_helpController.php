@@ -17,10 +17,11 @@ class Food_helpController extends Controller
             // show month number without 0 in front
             $currentMonth = Carbon::now()->format('m');
             // convert currentMonth in date to string
-            $currentMonths = Carbon::createFromFormat('m', $currentMonth)->toDateString();
-            $donors = Donor::leftJoin('payments', function($join) use ($currentMonths) {
+            // $currentMonths = Carbon::createFromFormat('m', $currentMonth)->toDateString();
+
+            $donors = Donor::leftJoin('payments', function($join) use ($currentMonth) {
                 $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '!=', $currentMonths);
+                     ->where('payments.payment_month', '!=', $currentMonth);
             })
             ->whereNull('payments.id') // Ensure no payment for the current month
             ->select('donors.*')
@@ -32,7 +33,6 @@ class Food_helpController extends Controller
             })
             ->distinct()
             ->count('donors.id');
-
             $unpaidDonorCount = Donor::leftJoin('payments', function($join) use ($currentMonth) {
                 $join->on('donors.id', '=', 'payments.donor_id')
                      ->where('payments.payment_month', '=', $currentMonth);
@@ -41,9 +41,7 @@ class Food_helpController extends Controller
             ->distinct()
             ->count('donors.id');
             $unpaid_donner = $unpaidDonorCount;
-
             $total_donner = Donor::count();
-
             // dd($paid_donner);
             return view("frontend.food_help",compact('donors','paid_donner','unpaid_donner','total_donner'));
         }catch (Exception $e){
@@ -91,5 +89,10 @@ class Food_helpController extends Controller
             return $th;
             // return redirect()->back()->with('message', 'Something went wrong');
         }
+    }
+
+    public function payments($id){
+        $payments = Payment::where('donor_id',$id)->get();
+        dd($payments);
     }
 }
