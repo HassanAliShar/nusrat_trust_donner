@@ -95,4 +95,14 @@ class Food_helpController extends Controller
         $payments = Payment::where('donor_id',$id)->get();
         dd($payments);
     }
-}
+
+    public function update(Request $request){
+        $donors = Donor::find($request->id);
+        $donors->name = $request->name;
+        $donors->contact_no= $request->contact_no;
+        $donors->children = $request->children;
+        $donors->update();
+        return redirect()->back();
+        }
+    }
+

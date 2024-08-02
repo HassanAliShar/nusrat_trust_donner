@@ -14,6 +14,7 @@ Route::get('/food_help',[Food_helpController::class,'index'])->name('food_help.i
 Route::post('/food_help/store', [Food_helpController::class, 'store'])->name('food_help.store');
 
 Route::post('/food_help/payments/store', [Food_helpController::class, 'store_payments'])->name('food_help.payments.store');
+Route::post('/food_help/update', [Food_helpController::class, 'update'])->name('food_help.update');
 
 Route::get('/payments/{id}', [Food_helpController::class, 'payments'])->name('food.help.donor.payments');
 
