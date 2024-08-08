@@ -811,18 +811,17 @@ button.close {
 .tooltip-content4 {
   position: absolute;
   z-index: 99;
-  width: 360px;
+  width: 100px;
   left: 50%;
   margin-left: -180px;
-  bottom: -5px;
   text-align: left;
   background: #448aff;
   opacity: 0;
-  font-size: 14px;
-  line-height: 27px;
-  padding: 1.5em;
+  font-size: 10px;
+  line-height: 15px;
+  padding: 1.0em;
   color: #fff;
-  border-bottom: 55px solid #0053dd;
+  border-bottom: 15px solid #0053dd;
   cursor: default;
   pointer-events: none;
   border-radius: 5px;

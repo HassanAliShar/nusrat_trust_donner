@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('mahanakifalats', function (Blueprint $table) {
             $table->id();
-            $table->string('recept_no');
-            $table->string('amount')->nullable();
-            $table->string('payment_month');
-            $table->string('payment_date');
+            $table->integer('families');
             $table->unsignedBigInteger('donor_id');
-            $table->string('type')->nullable();
-            $table->foreign('donor_id')->references('id')->on('donors');
+            $table->foreign('donor_id')->references('id')->on('donors')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('mahanakifalats');
     }
 };

@@ -2,44 +2,58 @@
 <html lang="en">
 
 <head>
-    <title>Nusrat Trust</title>
-    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 10]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
-      <!-- Meta -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="description" content="Mega Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
-      <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
-      <meta name="author" content="codedthemes" />
-      <!-- Favicon icon -->
-      <link rel="icon" href="{{url('frontend/images/favicon.ico')}}" type="image/x-icon">
+<title>Nusrat Trust</title>
+
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ <meta name="description" content="Mega Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+ <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+ <meta name="author" content="codedthemes" />
+
+ <!-- Favicon icon -->
+ <link rel="icon" href="{{url('frontend/images/favicon.ico')}}" type="image/x-icon">
+ <!-- Required Fremwork -->
+ <link rel="stylesheet" type="text/css" href="{{url('frontend/css/bootstrap/css/bootstrap.min.css')}}">
+ <!-- themify icon -->
+ <link rel="stylesheet" type="text/css" href="{{url('frontend/icon/themify-icons/themify-icons.css')}}">
+ <!-- Font Awesome -->
+ <link rel="stylesheet" type="text/css" href="{{url('frontend/icon/font-awesome/css/font-awesome.min.css')}}">
+   <!-- Style.css -->
+ <link rel="stylesheet" type="text/css" href="{{url('frontend/css/style.css')}}">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+$(document).ready(function(){
+  $("#myInput_food").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable_food tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+$(document).ready(function(){
+  $("#myInput_mahna").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable_mahna tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 
 
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
-    <!-- waves.css -->
-    <link rel="stylesheet" href="{{url('frontend/pages/waves/css/waves.min.css')}}" type="text/css"   media="all">
-      <!-- Required Fremwork -->
-      <link rel="stylesheet" type="text/css" href="{{url('frontend/css/bootstrap/css/bootstrap.min.css')}}">
-      <!-- waves.css -->
-      <link rel="stylesheet" href="{{url('frontend/pages/waves/css/waves.min.css')}}" type="text/css" media="all">
-      <!-- themify icon -->
-      <link rel="stylesheet" type="text/css" href="{{url('frontend/icon/themify-icons/themify-icons.css')}}">
-      <!-- Font Awesome -->
-      <link rel="stylesheet" type="text/css" href="{{url('frontend/icon/font-awesome/css/font-awesome.min.css')}}">
-      <!-- scrollbar.css -->
-      <link rel="stylesheet" type="text/css" href="{{url('frontend/css/jquery.mCustomScrollbar.css')}}">
-        <!-- am chart export.css -->
-
-      <!-- Style.css -->
-      <link rel="stylesheet" type="text/css" href="{{url('frontend/css/style.css')}}">
+</script>
 
   </head>
+
   <body>
 
     <div id="pcoded" class="pcoded">
@@ -219,155 +233,81 @@
                     <li class="pcoded-hasmenu">
                         <a href="javascript:void(0)" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                            <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Donners</span>
+                            <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Add Donnores</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                         <ul class="pcoded-submenu">
                             <li class=" ">
-                                <a href="{{ url('food_help') }}" class="waves-effect waves-dark">
+                                <a href="{{ url('add_donnor') }}" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Food Help</span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add Donnores</span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                             </li>
-                            <li class="">
-                                <a href="{{ ('mahana_kifalat') }}" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Mahana Kifalat</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
-                            <li class=" ">
-                                <a href="{{ 'qurbani' }}" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Qurbani</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
-
-
-                            </li>
-                            <li class=" ">
-                                <a href="icon-themify.html" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Total Donners</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
-
-                        </ul>
+                      </ul>
                     </li>
                 </ul>
-                <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Donner  &amp; Massages</div>
+                <div class="pcoded-navigation-label" data-i18n="nav.category.forms">ADD  &amp; PAYMENTS </div>
                 <ul class="pcoded-item pcoded-left-item">
                     <li>
-                        <a href="form-elements-component.html" class="waves-effect waves-dark">
+                        <a href="{{ route('food.help.donners') }}" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Form Components</span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">FOOD_HELP</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
                     <li>
-                        <a href="bs-basic-table.html" class="waves-effect waves-dark">
+                        <a href="/mahana_kifalat" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Basic Table</span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">MAHANA KIFALAT</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
+
 
                 </ul>
 
-                <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Chart &amp; Maps</div>
+                <div class="pcoded-navigation-label" data-i18n="nav.category.forms">SHOW  &amp; DONORS </div>
                 <ul class="pcoded-item pcoded-left-item">
                     <li>
-                        <a href="chart.html" class="waves-effect waves-dark">
+                        <a href="/fhs_view" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Chart</span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">FOOD_HELP</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
                     <li>
-                        <a href="map-google.html" class="waves-effect waves-dark">
+                        <a href="/mahana_kifalat" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Maps</span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">MAHANA KIFALAT</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
+                    <li>
                     <li class="pcoded-hasmenu">
                         <a href="javascript:void(0)" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                            <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Pages</span>
+                            <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">QURBANI</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                         <ul class="pcoded-submenu">
                             <li class=" ">
                                 <a href="auth-normal-sign-in.html" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Login</span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">WAQAF QURBANI</span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                             </li>
                             <li class=" ">
                                 <a href="auth-sign-up.html" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Register</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
-                            <li class=" ">
-                                <a href="sample-page.html" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Sample Page</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-
-                <div class="pcoded-navigation-label" data-i18n="nav.category.other">Other</div>
-                <ul class="pcoded-item pcoded-left-item">
-                    <li class="pcoded-hasmenu ">
-                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                            <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
-                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Menu Levels</span>
-                            <span class="pcoded-mcaret"></span>
-                        </a>
-                        <ul class="pcoded-submenu">
-                            <li class="">
-                                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Menu Level 2.1</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                            </li>
-                            <li class="pcoded-hasmenu ">
-                                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">Menu Level 2.2</span>
-                                    <span class="pcoded-mcaret"></span>
-                                </a>
-                                <ul class="pcoded-submenu">
-                                    <li class="">
-                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">Menu Level 3.1</span>
-                                            <span class="pcoded-mcaret"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                    <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-23">Menu Level 2.3</span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">IJTAMI QURBANI</span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                             </li>
 
                         </ul>
                     </li>
+
                 </ul>
-            </div>
         </nav>

@@ -2,51 +2,23 @@
 
 namespace App\Http\Controllers\frontend;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
+use App\Models\FoodHelp;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Http\Request;
-
-class Food_helpController extends Controller
+class Pay_foodController extends Controller
 {
     public function index(Request $request)
     {
         try {
-            // Get the selected month or default to the current month
-            $selectedMonth = $request->input('month', Carbon::now()->format('m'));
 
-            // Retrieve donors who haven't made a payment in the selected month
-            $donors = Donor::leftJoin('payments', function($join) use ($selectedMonth) {
-                $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '=', $selectedMonth);
-            })
-            ->whereNull('payments.id') // Ensure no payment for the selected month
-            ->select('donors.*')
-            ->get();
+            $food_help_donners = FoodHelp::with('donor')->get();
+            // dd($food_help_donners);
 
-            // Count the number of donors who have made a payment in the selected month
-            $paid_donner = Donor::join('payments', function($join) use ($selectedMonth) {
-                $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '=', $selectedMonth);
-            })
-            ->distinct()
-            ->count('donors.id');
-
-            // Count the number of donors who haven't made a payment in the selected month
-            $unpaidDonorCount = Donor::leftJoin('payments', function($join) use ($selectedMonth) {
-                $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '=', $selectedMonth);
-            })
-            ->whereNull('payments.donor_id') // Exclude donors who have made a payment in the selected month
-            ->distinct()
-            ->count('donors.id');
-
-            $unpaid_donner = $unpaidDonorCount;
-            $total_donner = Donor::count();
-
-            return view("frontend.food_help", compact('donors', 'paid_donner', 'unpaid_donner', 'total_donner', 'selectedMonth'));
+            return view("frontend.pay_food", compact('food_help_donners'));
         } catch (Exception $e) {
             return redirect()->back()->with('message', 'Something went wrong');
         }

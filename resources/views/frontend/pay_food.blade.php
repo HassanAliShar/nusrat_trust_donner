@@ -168,23 +168,24 @@
                                                                             <tr>
                                                                                 <th>Selected</th>
                                                                                 <th>S.No</th>
+                                                                                <th>No.Child</th>
                                                                                 <th>Name</th>
                                                                                 <th>Contact</th>
                                                                                 <th>Status</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody  id="myTable">
-                                                                            @foreach($donors ?? [] as $key => $row)
+                                                                            @foreach($food_help_donners ?? [] as $key => $row)
                                                                                 <tr>
                                                                                     <th><input type="checkbox"></th>
-                                                                                    <th scope="row">{{ $row->id ?? '' }}</th>
-                                                                                    <td>{{ $row->name ?? 'Guest' }}</td>
-                                                                                    <td>{{ $row->contact_no ?? '' }}</td>
+                                                                                    <th scope="row">{{ $row->donor->id ?? '' }}</th>
+                                                                                    <th>{{ $row->children ?? 0 }}</th>
+                                                                                    <td>{{ $row->donor->name ?? 'Guest' }}</td>
+                                                                                    <td>{{ $row->donor->contact_no ?? '' }}</td>
                                                                                     <td>
-                                                                                        {{-- <button type="button" onclick="document.getElementById('donner_id').value = {{ $row->id }}" data-toggle="modal" data-target="#exampleModal_paid" class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>Paid</button> --}}
-                                                                                         <button type="button"  onclick="document.getElementById('donner_id').value = {{ $row->id }}" data-toggle="modal" data-target="#exampleModal_update" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square">UpDate</i></button>
-                                                                                         <button type="button"  onclick="document.getElementById('donner_type_id').value = {{ $row->id }}" data-toggle="modal" data-target="#AssignCategoryModal" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square">Add In</i></button>
-                                                                                        {{-- <button class="btn btn-danger btn-sm"><a class="text-white" href="{{ route('view.details',$row->id) }}">View Details</a></button> --}}
+                                                                                        <button type="button" onclick="document.getElementById('donner_id').value = {{ $row->donor->id }}" data-toggle="modal" data-target="#exampleModal_paid" class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>Paid</button>
+                                                                                         <button type="button"  onclick="document.getElementById('donner_id').value = {{ $row->donor->id }}" data-toggle="modal" data-target="#exampleModal_update" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square">UpDate</i></button>
+                                                                                        <button class="btn btn-danger btn-sm"><a class="text-white" href="{{ route('view.details',$row->donor->id) }}">View Details</a></button>
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -210,7 +211,7 @@
                 <div class="modal fade" id="exampleModal_paid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('food_help.payments.store') }}" method="post">
+                            <form action="{{ route('pay_food.payments.store') }}" method="post">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Pay Food_Help Scheme</h5>
@@ -317,7 +318,7 @@
                 <div class="modal fade" id="exampleModal_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('food_help.store') }}" method="post">
+                            <form action="{{ route('pay_food.store') }}" method="post">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Add New Donner Food_Help Scheme</h5>
@@ -328,7 +329,15 @@
                                 <div class="modal-body">
 
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-3">
+                                            <input type="text" name="children" class="form-control" placeholder="Child" value="{{old('children')}}"/>
+                                            <span class="text-danger">
+                                                @error('children')
+                                                     {{$message}}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-4">
                                             <input type="text" name="name" class="form-control" placeholder="Donner Name" value="{{old('name')}}"/>
                                             <span class="text-danger">
                                                 @error('name')
@@ -336,7 +345,7 @@
                                                 @enderror
                                             </span>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-5">
                                             <input type="text" name="contact_no" class="form-control" placeholder="Donner Phone" value="{{old('contact_no')}}"/>
                                             <span class="text-danger">
                                                 @error('contact_no')
@@ -357,55 +366,27 @@
                 </div>
 
 
-                <div class="modal fade" id="AssignCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <form action="{{ route('donor_category.store') }}" method="post">
-                                @csrf
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add New Donner Food_Help Scheme</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <input type="hidden" name="donor_id" id="donner_type_id">
-                                            <strong>Select Donner Category:</strong>
-                                            <select class="form-control" name="category" id="multiple-checkboxes">
-                                                <option value="">--Select Category--</option>
-                                                <option value="food_help">Food Help</option>
-                                                <option value="kefalat">Kefalat</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                              <label for="">Children/Families</label>
-                                              <input type="number" name="category_type" id="" class="form-control" placeholder="Children/Families" aria-describedby="helpId">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <center>
-                                        <button type="submit" class="btn btn-primary d-flex justify-content-center">Add Donner</button>
-                                    </center>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <!-- End Update Model Box here -->
+
+
+
+
+                <!-- Start Add new Donner Model Box here -->
+
+
+                <!-- End Add new donner Model Box here -->
+
+
+
+
 
 
  <!-- start Update  modal box -->
 
-             <div class="modal fade" id="exampleModal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-
+ <div class="modal fade" id="exampleModal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('food_help.update') }}" method="post">
+                            <form action="{{ route('pay_food.update') }}" method="post">
                                 @csrf
 
                                 <div class="modal-header">
@@ -417,6 +398,9 @@
                                 <div class="modal-body">
                                     <div class="form-group row">
                                         <input type="hidden" name="id"  value="{{ $row->id ?? '' }}" class="form-control">
+                                        <div class="col-sm-4">
+                                            <input type="text" name="children" class="form-control"  value="{{ $row->children ?? '' }}" >
+                                        </div>
                                         <div class="col-sm-4">
                                             <input type="text" name="name" class="form-control"  value="{{ $row->name ?? '' }}" >
                                         </div>
@@ -439,9 +423,5 @@
                     </div>
                 </div>
                 <!-- End end update modal box -->
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#multiple-checkboxes').multiselect();
-                    });
-                </script>
+
                 @endsection
