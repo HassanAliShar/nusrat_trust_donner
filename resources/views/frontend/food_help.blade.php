@@ -124,7 +124,7 @@
                                                     class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Add New Donner</button>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <button class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Send Message</button>
+                                                <button type="button"  data-toggle="modal" data-target="#exampleModal_msg" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square">Send Message</i></button>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <button class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Show Monthly Details</button>
@@ -403,6 +403,7 @@
              <div class="modal fade" id="exampleModal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
 
+
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form action="{{ route('food_help.update') }}" method="post">
@@ -439,9 +440,38 @@
                     </div>
                 </div>
                 <!-- End end update modal box -->
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#multiple-checkboxes').multiselect();
-                    });
-                </script>
+                <div class="modal fade" id="exampleModal_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form action="{{ route('food_help.update') }}" method="post">
+                                @csrf
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Send Message All Donnors</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group row">
+                                        <input type="hidden" name="id"  value="{{ $row->id ?? '' }}" class="form-control">
+                                    
+
+                                        <div class="col-sm-12">
+                                            <input type="text" name="msg" class="form-control"  placeholder="Type your message here" >
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer justify-content center">
+                                    <center>
+                                        <button type="submit" class="btn btn-primary d-flex justify-content-center">Send Message </button>
+                                    </center>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 @endsection
