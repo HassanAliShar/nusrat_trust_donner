@@ -77,7 +77,7 @@ class Pay_foodController extends Controller
             foreach ($request->months as $month) {
                 // Check if a payment already exists for this donor for the same month
                 $existingPayment = Payment::where('donor_id', $request->donor_id)
-                    ->whereMonth('payment_month', $month)->where('type', $request->type ?? '')
+                    ->where('payment_month', $month)->where('type', $request->type ?? '')
                     ->first();
 
                 if ($existingPayment) {
