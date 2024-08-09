@@ -37,13 +37,23 @@
                 <!-- Page-body start -->
                 <div class="page-body">
                     <div class="row">
+                        @if(session()->has('message'))
+                            <div class="col-md-12">
+                                <div class="alert alert-success alert-dismissible">
+                                    {{ session()->get('message') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
                         <!-- task, page, download counter  start -->
                         <div class="col-xl-3 col-md-6">
                             <div class="card">
                                 <div class="card-block">
                                     <div class="row align-items-center">
                                         <div class="col-8">
-                                            <h4 class="text-c-red">00</h4>
+                                            <h4 class="text-c-red">{{ $totalPaidDonors ?? 00 }}</h4>
                                             <h6 class="text-muted m-b-0">Paid Donner</h6>
                                         </div>
                                         <div class="col-4 text-right">
@@ -66,7 +76,7 @@
                                 <div class="card-block">
                                     <div class="row align-items-center">
                                         <div class="col-8">
-                                            <h4 class="text-c-red">00</h4>
+                                            <h4 class="text-c-red">{{ $totalUnpaidDonors ?? 00 }}</h4>
                                             <h6 class="text-muted m-b-0">Not Paid Donner</h6>
                                         </div>
                                         <div class="col-4 text-right">
@@ -167,8 +177,6 @@
                                             <table class="table justify-content-center">
                                                 <thead>
                                                     <tr>
-
-
                                                         <th>No.families</th>
                                                         <th>Name</th>
                                                         <th>Contact</th>
@@ -176,9 +184,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($mahana_kifalat   ?? [] as $key => $row)
+                                                @foreach($mahana_kifalat_donners   ?? [] as $key => $row)
                                                     <tr>
-
                                                      <td>{{ $row->families ?? 0 }}</td>
                                                      <td>{{ $row->donor->name ?? 'Guest' }}</td>
                                                      <td>{{ $row->donor->contact_no ?? '' }}</td>
@@ -229,6 +236,7 @@
                 <div class="modal-body">
                     <div class="form-group row">
                         <input type="hidden" name="donor_id" id="donner_id" class="form-control">
+                        <input type="hidden" name="type" value="mahana_kifalat" />
                         <div class="col-sm-4">
                             <input type="text" name="recept_no" class="form-control" placeholder="Raseed No">
                         </div>
@@ -243,37 +251,37 @@
                             <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="01" id="january">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-01" id="january">
                                     <label class="form-check-label" for="january">1-January</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="02" id="february">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-02" id="february">
                                     <label class="form-check-label" for="february">2-February</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="03" id="march">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-03" id="march">
                                     <label class="form-check-label" for="march">3-March</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="04" id="april">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-04" id="april">
                                     <label class="form-check-label" for="april">4-April</label>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="05" id="may">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-05" id="may">
                                     <label class="form-check-label" for="may">5-May</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="06" id="june">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-06" id="june">
                                     <label class="form-check-label" for="june">6-June</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="07" id="july">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-07" id="july">
                                     <label class="form-check-label" for="july">7-July</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="months[]" type="checkbox" value="08" id="august">
+                                    <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-08" id="august">
                                     <label class="form-check-label" for="august">8-August</label>
                                 </div>
 
@@ -282,19 +290,19 @@
                                 <div class="col-sm-4">
 
                                     <div class="form-check">
-                                        <input class="form-check-input" name="months[]" type="checkbox" value="09" id="september">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-09" id="september">
                                         <label class="form-check-label" for="september">9-September</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" name="months[]" type="checkbox" value="10" id="october">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-10" id="october">
                                         <label class="form-check-label" for="october">10-October</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" name="months[]" type="checkbox" value="11" id="november">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-11" id="november">
                                         <label class="form-check-label" for="november">11-November</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" name="months[]" type="checkbox" value="12" id="december">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-12" id="december">
                                         <label class="form-check-label" for="december">12-December</label>
                                     </div>
 

@@ -71,7 +71,6 @@ class Pay_foodController extends Controller
             'months' => 'required|array',
             'payment_date' => 'required|date',
             'amount' => 'required|numeric',
-            'donor_id' => 'required|exists:donors,id',
         ]);
 
         try {

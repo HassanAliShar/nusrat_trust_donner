@@ -37,17 +37,39 @@ class HomeController extends Controller
 
             // Calculate totals
             $totalDonorsCount = $allDonors->count();
-            $unpaidDonors = $unpaidDonors->count();
-            $totalPaidDonors = $totalDonorsCount - $unpaidDonors;
+            $unpaidDonorsCount = $unpaidDonors->count();
+            $totalPaidDonors = $totalDonorsCount - $unpaidDonorsCount;
+
+
+            // Get the IDs of donors who have made payments in the current month
+            $mpaidDonorIds = Payment::where('payment_month', $currentMonth)
+                ->where('type', 'mahana_kifalat')
+                ->pluck('donor_id')
+                ->toArray(); // Convert to array for easier comparison
+
+            // Fetch all food help donors
+            $mallDonors = FoodHelp::with('donor')->get();
+
+            // Filter out donors who have paid for the current month
+            $mfood_help_donners = $mallDonors->filter(function ($foodHelp) use ($mpaidDonorIds) {
+                return !in_array($foodHelp->donor_id, $mpaidDonorIds);
+            });
+
+            // Filter unpaid donors
+            $munpaidDonors = $mallDonors->filter(function ($foodHelp) use ($mpaidDonorIds) {
+                return !in_array($foodHelp->donor_id, $mpaidDonorIds);
+            });
+
+            // Calculate totals
+            $mtotalDonorsCount = $mallDonors->count();
+            $munpaidDonorsCount = $munpaidDonors->count();
+            $mtotalPaidDonors = $mtotalDonorsCount - $munpaidDonorsCount;
 
             // Pass variables to the view
-            return view("frontend.index", compact('unpaidDonors', 'totalPaidDonors','totalDonorsCount', 'totalDonors'));
+            return view("frontend.index", compact('unpaidDonors', 'totalPaidDonors','unpaidDonorsCount','totalDonorsCount', 'allDonors'));
         } catch (\Exception $e) {
             // Log the exception for debugging
-            \Log::error('Error in HomeController@index: '.$e->getMessage());
-
-            // Redirect with a user-friendly message
-            return redirect()->back()->with('message', 'Something went wrong. Please try again later.');
+            return $e->getMessage();
         }
     }
 

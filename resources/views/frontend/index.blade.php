@@ -40,7 +40,7 @@
                                 <div class="card-block">
                                     <div class="row align-items-center">
                                         <div class="col-8">
-                                            <h4 class="text-c-red">{{ $totalDonors ?? 00 }}</h4>
+                                            <h4 class="text-c-red">{{ $totalDonorsCount ?? 00 }}</h4>
                                             <h6 class="text-muted m-b-0">Food Help</h6>
                                         </div>
                                         <div class="col-4 text-right">
@@ -52,8 +52,8 @@
                                     <div class="row align-items-center">
                                         <div class="col-9">
                                             <p class="text-white m-b-0">Current Month Status<br>
-                                             Paid: <span style="font-size:20px; color: red;">{{ $paidDonorCount }}</span> |
-                                             Unpaid: <span style="font-size:20px; color: red;">{{ $unpaidDonorCount }}</span>
+                                             Paid: <span style="font-size:20px; color: red;">{{ $totalPaidDonors }}</span> |
+                                             Unpaid: <span style="font-size:20px; color: red;">{{ $unpaidDonorsCount }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-8">
                                             <h4 class="text-c-red">{{ $totalDonorsCount ?? 00 }}</h4>
-                                            <h6 class="text-muted m-b-0">Food Help</h6>
+                                            <h6 class="text-muted m-b-0">Mahana Kifalat Donners</h6>
                                         </div>
                                         <div class="col-4 text-right">
                                             <i class="fa fa-calendar-check-o f-28"></i>
@@ -80,7 +80,7 @@
                                         <div class="col-9">
                                             <p class="text-white m-b-0">Current Month Status<br>
                                              Paid: <span style="font-size:20px; color: red;">{{ $totalPaidDonors }}</span> |
-                                             Unpaid: <span style="font-size:20px; color: red;">{{ $unpaidDonors }}</span>
+                                             Unpaid: <span style="font-size:20px; color: red;">{{ $unpaidDonorsCount }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -123,8 +123,8 @@
                                             <tbody  id="myTable_food">
                                                 @foreach($unpaidDonors as $donor)
                                                 <tr>
-                                                    <td>{{ $donor->name }}</td>
-                                                    <td>{{ $donor->contact_no }}</td>
+                                                    <td>{{ $donor->donor->name }}</td>
+                                                    <td>{{ $donor->donor->contact_no }}</td>
 
                                                     <td>
                                                         <button class="btn btn-danger btn-sm">
