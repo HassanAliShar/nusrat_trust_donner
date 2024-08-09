@@ -14,11 +14,33 @@ class Pay_foodController extends Controller
     public function index(Request $request)
     {
         try {
+            $currentMonth = Carbon::now()->format('Y-m'); // Format to 'YYYY-MM'
 
-            $food_help_donners = FoodHelp::with('donor')->get();
-            // dd($food_help_donners);
+            // Get the IDs of donors who have made payments in the current month
+            $paidDonorIds = Payment::where('payment_month', $currentMonth)
+                ->where('type', 'food_help')
+                ->pluck('donor_id')
+                ->toArray(); // Convert to array for easier comparison
 
-            return view("frontend.pay_food", compact('food_help_donners'));
+            // Fetch all food help donors
+            $allDonors = FoodHelp::with('donor')->get();
+
+            // Filter out donors who have paid for the current month
+            $food_help_donners = $allDonors->filter(function ($foodHelp) use ($paidDonorIds) {
+                return !in_array($foodHelp->donor_id, $paidDonorIds);
+            });
+
+            // Filter unpaid donors
+            $unpaidDonors = $allDonors->filter(function ($foodHelp) use ($paidDonorIds) {
+                return !in_array($foodHelp->donor_id, $paidDonorIds);
+            });
+
+            // Calculate totals
+            $totalDonors = $allDonors->count();
+            $totalUnpaidDonors = $unpaidDonors->count();
+            $totalPaidDonors = $totalDonors - $totalUnpaidDonors;
+
+            return view("frontend.pay_food", compact('food_help_donners', 'unpaidDonors', 'totalDonors', 'totalPaidDonors', 'totalUnpaidDonors'));
         } catch (Exception $e) {
             return redirect()->back()->with('message', 'Something went wrong');
         }
@@ -47,26 +69,40 @@ class Pay_foodController extends Controller
         $request->validate([
             'recept_no' => 'required',
             'months' => 'required|array',
-            'payment_date' => 'required',
-            'amount' => 'required',
+            'payment_date' => 'required|date',
+            'amount' => 'required|numeric',
+            'donor_id' => 'required|exists:donors,id',
         ]);
+
         try {
-            // check validation here
-            foreach ($request->months as $key => $value) {
+            foreach ($request->months as $month) {
+                // Check if a payment already exists for this donor for the same month
+                $existingPayment = Payment::where('donor_id', $request->donor_id)
+                    ->whereMonth('payment_month', $month)->where('type', $request->type ?? '')
+                    ->first();
+
+                if ($existingPayment) {
+                    return redirect()->back()->with('message', 'Payment for this month already exists');
+                }
+
+                // Create new payment
                 Payment::create([
                     'recept_no' => $request->recept_no,
-                    'payment_month' => $value,
+                    'payment_month' => $month,
                     'payment_date' => $request->payment_date,
-                    'amount'    => $request->amount,
+                    'amount' => $request->amount / count($request->months),
+                    'type' => $request->type ?? '',
                     'donor_id' => $request->donor_id
                 ]);
             }
+
             return redirect()->back()->with('message', 'Payment Added Successfully');
         } catch (Exception $th) {
-            return $th;
-            // return redirect()->back()->with('message', 'Something went wrong');
+            return redirect()->back()->with('message', 'Something went wrong');
         }
     }
+
+
 
     public function payments($id){
         $payments = Payment::where('donor_id',$id)->get();

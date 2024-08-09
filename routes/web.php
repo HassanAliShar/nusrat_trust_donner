@@ -18,7 +18,7 @@ Route::get('/add_donnor', [Food_helpController::class, 'index'])->name('add_donn
 
 Route::get('/food-help/donners', [Pay_foodController::class, 'index'])->name('food.help.donners');
 
-Route::post('/pay_food/payments/store', [Food_helpController::class, 'store_payments'])->name('pay_food.payments.store');
+Route::post('/pay_food/payments/store', [Pay_foodController::class, 'store_payments'])->name('pay_food.payments.store');
 Route::post('/pay_food/store', [Food_helpController::class, 'store'])->name('pay_food.store');
 Route::post('/pay_food/update', [Food_helpController::class, 'update'])->name('pay_food.update');
 

@@ -40,7 +40,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-red">{{ $paid_donner ?? 00 }}</h4>
+                                                                <h4 class="text-c-red">{{ $totalPaidDonors ?? 00 }}</h4>
 
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -51,7 +51,7 @@
                                                     <div class="card-footer bg-c-purple">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0"><a class="text-white" href="/paid-food">Paid Donor</a></p>
+                                                                <p class="text-white m-b-0"><a class="text-white" href="/paid-food">PAID DONNOR</a></p>
                                                             </div>
 
                                                         </div>
@@ -63,8 +63,8 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-red">{{ $unpaid_donner ?? 00 }}</h4>
-                                                                <h6 class="text-muted m-b-0">Not Paid Donner</h6>
+                                                                <h4 class="text-c-red">{{ $totalUnpaidDonors ?? 00 }}</h4>
+
                                                             </div>
                                                             <div class="col-4 text-right">
                                                                 <i class="fa fa-calendar-check-o f-28"></i>
@@ -74,7 +74,7 @@
                                                     <div class="card-footer bg-c-purple">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0">Not paid</p>
+                                                                <p class="text-white m-b-0">UNPAID DONNOR</p>
                                                             </div>
 
                                                         </div>
@@ -86,8 +86,8 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-red">{{ $total_donner ?? 00 }}</h4>
-                                                                <h6 class="text-muted m-b-0">Total Donners</h6>
+                                                                <h4 class="text-c-red">{{ $totalDonors ?? 00 }}</h4>
+
                                                             </div>
                                                             <div class="col-4 text-right">
                                                                 <i class="fa fa-calendar-check-o f-28"></i>
@@ -119,10 +119,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                <div class="col-sm-3">
-                                                    <button type="button" data-toggle="modal" data-target="#exampleModal_add"
-                                                    class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Add New Donner</button>
-                                                </div>
+
                                                 <div class="col-sm-3">
                                                     <button class="btn btn-out-dashed waves-effect waves-light btn-primary btn-square">Send Message</button>
                                                 </div>
@@ -166,7 +163,7 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Selected</th>
+
                                                                                 <th>S.No</th>
                                                                                 <th>No.Child</th>
                                                                                 <th>Name</th>
@@ -177,7 +174,7 @@
                                                                         <tbody  id="myTable">
                                                                             @foreach($food_help_donners ?? [] as $key => $row)
                                                                                 <tr>
-                                                                                    <th><input type="checkbox"></th>
+
                                                                                     <th scope="row">{{ $row->donor->id ?? '' }}</th>
                                                                                     <th>{{ $row->children ?? 0 }}</th>
                                                                                     <td>{{ $row->donor->name ?? 'Guest' }}</td>
@@ -207,106 +204,99 @@
 
 
                 <!-- start Status paid modal box -->
-
                 <div class="modal fade" id="exampleModal_paid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <form action="{{ route('pay_food.payments.store') }}" method="post">
-                                @csrf
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Pay Food_Help Scheme</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group row">
-                                        <input type="hidden" name="donor_id" id="donner_id" class="form-control">
-                                        <div class="col-sm-4">
-                                            <input type="text" name="recept_no" class="form-control" placeholder="Raseed No">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" name="amount" class="form-control" placeholder="amount">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="date" name="payment_date" class="form-control" placeholder="Donner Name">
-                                        </div>
-                                        <div class="col-sm-12 mt-4">
-                                            <label>Choose Months To Donate Them:</label>
-                                            <div class="row">
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="01" id="january">
-                                                    <label class="form-check-label" for="january">1-January</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="02" id="february">
-                                                    <label class="form-check-label" for="february">2-February</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="03" id="march">
-                                                    <label class="form-check-label" for="march">3-March</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="04" id="april">
-                                                    <label class="form-check-label" for="april">4-April</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="05" id="may">
-                                                    <label class="form-check-label" for="may">5-May</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="06" id="june">
-                                                    <label class="form-check-label" for="june">6-June</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="07" id="july">
-                                                    <label class="form-check-label" for="july">7-July</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="months[]" type="checkbox" value="08" id="august">
-                                                    <label class="form-check-label" for="august">8-August</label>
-                                                </div>
-
-                                            </div>
-
-                                                <div class="col-sm-4">
-
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" name="months[]" type="checkbox" value="09" id="september">
-                                                        <label class="form-check-label" for="september">9-September</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" name="months[]" type="checkbox" value="10" id="october">
-                                                        <label class="form-check-label" for="october">10-October</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" name="months[]" type="checkbox" value="11" id="november">
-                                                        <label class="form-check-label" for="november">11-November</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" name="months[]" type="checkbox" value="12" id="december">
-                                                        <label class="form-check-label" for="december">12-December</label>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('pay_food.payments.store') }}" method="post">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pay Food_Help Scheme</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <input type="hidden" name="donor_id" id="donner_id" class="form-control">
+                        <input type="hidden" name="type" id="food_help_scheme_id" class="form-control" value="food_help">
+                        <div class="col-sm-4">
+                            <input type="text" name="recept_no" class="form-control" placeholder="Receipt No">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" name="amount" class="form-control" placeholder="Amount">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="date" name="payment_date" class="form-control" placeholder="Payment Date">
+                        </div>
+                        <div class="col-sm-12 mt-4">
+                            <label>Choose Months To Donate Them:</label>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-01" id="january">
+                                        <label class="form-check-label" for="january">1-January</label>
                                     </div>
-
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-02" id="february">
+                                        <label class="form-check-label" for="february">2-February</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-03" id="march">
+                                        <label class="form-check-label" for="march">3-March</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-04" id="april">
+                                        <label class="form-check-label" for="april">4-April</label>
+                                    </div>
                                 </div>
-                                <div class="modal-footer justify-content center">
-                                    <center>
-                                        <button type="submit" class="btn btn-primary d-flex justify-content-center">Pay Donation</button>
-                                    </center>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-05" id="may">
+                                        <label class="form-check-label" for="may">5-May</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-06" id="june">
+                                        <label class="form-check-label" for="june">6-June</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-07" id="july">
+                                        <label class="form-check-label" for="july">7-July</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-08" id="august">
+                                        <label class="form-check-label" for="august">8-August</label>
+                                    </div>
                                 </div>
-                            </form>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-09" id="september">
+                                        <label class="form-check-label" for="september">9-September</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-10" id="october">
+                                        <label class="form-check-label" for="october">10-October</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-11" id="november">
+                                        <label class="form-check-label" for="november">11-November</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="months[]" type="checkbox" value="{{ date('Y') }}-12" id="december">
+                                        <label class="form-check-label" for="december">12-December</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary">Pay Donation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 

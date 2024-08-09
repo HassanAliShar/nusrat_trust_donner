@@ -69,33 +69,6 @@ class Food_helpController extends Controller
         }
     }
 
-
-    public function store_payments(Request $request)
-    {
-        $request->validate([
-            'recept_no' => 'required',
-            'months' => 'required|array',
-            'payment_date' => 'required',
-            'amount' => 'required',
-        ]);
-        try {
-            // check validation here
-            foreach ($request->months as $key => $value) {
-                Payment::create([
-                    'recept_no' => $request->recept_no,
-                    'payment_month' => $value,
-                    'payment_date' => $request->payment_date,
-                    'amount'    => $request->amount,
-                    'donor_id' => $request->donor_id
-                ]);
-            }
-            return redirect()->back()->with('message', 'Payment Added Successfully');
-        } catch (Exception $th) {
-            return $th;
-            // return redirect()->back()->with('message', 'Something went wrong');
-        }
-    }
-
     public function payments($id){
         $payments = Payment::where('donor_id',$id)->get();
         dd($payments);

@@ -14,6 +14,7 @@ class Payment extends Model
         'amount',
         'payment_month',
         'payment_date',
+        'type',
         'donor_id'
     ];
 
@@ -21,4 +22,9 @@ class Payment extends Model
     {
         return $this->belongsTo(Donor::class);
     }
+    public function payments()
+{
+    return $this->hasMany(Payment::class);
+}
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
+use App\Models\FoodHelp;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,45 +14,34 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         try {
-            // Get selected month or default to current month
-            $selectedMonth = $request->input('month', Carbon::now()->format('m'));
+            $currentMonth = Carbon::now()->format('Y-m'); // Format to 'YYYY-MM'
 
-            // Get donors who have not made a payment in the selected month
-            $unpaidDonors = Donor::leftJoin('payments', function ($join) use ($selectedMonth) {
-                $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '=', $selectedMonth);
-            })
-            ->whereNull('payments.donor_id')
-            ->select('donors.*')
-            ->get()
-            ->map(function ($donor) {
-                // Fetch unpaid months for each donor
-                $donor->unpaidMonths = $this->getUnpaidMonths($donor->id);
-                return $donor;
+            // Get the IDs of donors who have made payments in the current month
+            $paidDonorIds = Payment::where('payment_month', $currentMonth)
+                ->where('type', 'food_help')
+                ->pluck('donor_id')
+                ->toArray(); // Convert to array for easier comparison
+
+            // Fetch all food help donors
+            $allDonors = FoodHelp::with('donor')->get();
+
+            // Filter out donors who have paid for the current month
+            $food_help_donners = $allDonors->filter(function ($foodHelp) use ($paidDonorIds) {
+                return !in_array($foodHelp->donor_id, $paidDonorIds);
             });
 
-            // Count donors who have made a payment in the selected month
-            $paidDonorCount = Donor::join('payments', function ($join) use ($selectedMonth) {
-                $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '=', $selectedMonth);
-            })
-            ->distinct()
-            ->count('donors.id');
+            // Filter unpaid donors
+            $unpaidDonors = $allDonors->filter(function ($foodHelp) use ($paidDonorIds) {
+                return !in_array($foodHelp->donor_id, $paidDonorIds);
+            });
 
-            // Count donors who have not made a payment in the selected month
-            $unpaidDonorCount = Donor::leftJoin('payments', function ($join) use ($selectedMonth) {
-                $join->on('donors.id', '=', 'payments.donor_id')
-                     ->where('payments.payment_month', '=', $selectedMonth);
-            })
-            ->whereNull('payments.donor_id')
-            ->distinct()
-            ->count('donors.id');
-
-            // Total number of donors
-            $totalDonors = Donor::count();
+            // Calculate totals
+            $totalDonorsCount = $allDonors->count();
+            $unpaidDonors = $unpaidDonors->count();
+            $totalPaidDonors = $totalDonorsCount - $unpaidDonors;
 
             // Pass variables to the view
-            return view("frontend.index", compact('unpaidDonors', 'paidDonorCount', 'unpaidDonorCount', 'totalDonors', 'selectedMonth'));
+            return view("frontend.index", compact('unpaidDonors', 'totalPaidDonors','totalDonorsCount', 'totalDonors'));
         } catch (\Exception $e) {
             // Log the exception for debugging
             \Log::error('Error in HomeController@index: '.$e->getMessage());

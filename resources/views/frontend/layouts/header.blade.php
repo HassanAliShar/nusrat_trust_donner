@@ -76,7 +76,7 @@ $(document).ready(function(){
                               </div>
                           </div>
                       </div>
-                      <a href="index.html">
+                      <a href="/">
                           <img class="img-fluid" src="{{url('frontend/images/logo.png')}}" alt="Theme-Logo" />
                       </a>
                       <a class="mobile-options waves-effect waves-light">
@@ -224,7 +224,7 @@ $(document).ready(function(){
                 <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="active">
-                        <a href="index.html" class="waves-effect waves-dark">
+                        <a href="/" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                             <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                             <span class="pcoded-mcaret"></span>
