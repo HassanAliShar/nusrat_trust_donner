@@ -28,7 +28,7 @@ Route::post('/food_help/store', [Food_helpController::class, 'store'])->name('fo
 Route::post('/food_help/payments/store', [Food_helpController::class, 'store_payments'])->name('food_help.payments.store');
 Route::get('/payments/{id}', [Food_helpController::class, 'payments'])->name('food.help.donor.payments');
 Route::post('/food_help/update', [Food_helpController::class, 'update'])->name('food_help.update');
-Route::get('/view_details/{id}', [ViewController::class, 'index'])->name('view.details');
+Route::get('/view_details/{type}/{id}', [ViewController::class, 'index'])->name('view.details');
 Route::get('/qurbani', [QurbaniController::class, 'index'])->name('qurbani.index');
 Route::get('/paid-food', [PaidController::class, 'index'])->name('paid.food');
 Route::get('/fhs_view', [Fhs_viewController::class, 'index'])->name('fhs_view.index');

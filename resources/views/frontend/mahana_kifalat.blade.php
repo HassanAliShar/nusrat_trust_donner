@@ -196,7 +196,7 @@
                                                                 data-target="#exampleModal_update"
                                                                 class="btn btn-primary btn-sm"><i
                                                                     class="fa-solid fa-pen-to-square">UpDate</i></button>
-                                                            <button class="btn btn-danger btn-sm">View Details</button>
+                                                            <a href="{{ route('view.details',['mahana_kifalat',$row->donor->id]) }}" class="btn btn-danger btn-sm">View Details</a>
                                                         </td>
                                                     </tr>
                                                     @endforeach

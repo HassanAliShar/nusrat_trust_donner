@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 
 class ViewController extends Controller
 {
-    public function index($id)
+    public function index($type, $id)
     {
-        $payments = Payment::where('donor_id',$id)->get();
+        if($type == 'food_help'){
+            $payments = Payment::where('donor_id',$id)->where('type','food_help')->get();
+        }
+        else{
+            $payments = Payment::where('donor_id',$id)->where('type','mahana_kifalat')->get();
+        }
         return view("frontend.view_details",compact('payments'));
     }
 }

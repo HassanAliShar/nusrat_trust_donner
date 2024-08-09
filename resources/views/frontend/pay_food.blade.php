@@ -182,7 +182,7 @@
                                                                                     <td>
                                                                                         <button type="button" onclick="document.getElementById('donner_id').value = {{ $row->donor->id }}" data-toggle="modal" data-target="#exampleModal_paid" class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>Paid</button>
                                                                                          <button type="button"  onclick="document.getElementById('donner_id').value = {{ $row->donor->id }}" data-toggle="modal" data-target="#exampleModal_update" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square">UpDate</i></button>
-                                                                                        <button class="btn btn-danger btn-sm"><a class="text-white" href="{{ route('view.details',$row->donor->id) }}">View Details</a></button>
+                                                                                        <a class="btn btn-danger btn-sm" href="{{ route('view.details',['food_help', $row->donor->id]) }}">View Details</a>
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
