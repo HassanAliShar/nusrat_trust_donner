@@ -67,7 +67,7 @@
                                 <div class="card-block">
                                     <div class="row align-items-center">
                                         <div class="col-8">
-                                            <h4 class="text-c-red">{{ $totalDonorsCount ?? 00 }}</h4>
+                                            <h4 class="text-c-red">{{ $mtotalDonorsCount ?? 00 }}</h4>
                                             <h6 class="text-muted m-b-0">Mahana Kifalat Donners</h6>
                                         </div>
                                         <div class="col-4 text-right">
@@ -79,8 +79,8 @@
                                     <div class="row align-items-center">
                                         <div class="col-9">
                                             <p class="text-white m-b-0">Current Month Status<br>
-                                             Paid: <span style="font-size:20px; color: red;">{{ $totalPaidDonors }}</span> |
-                                             Unpaid: <span style="font-size:20px; color: red;">{{ $unpaidDonorsCount }}</span>
+                                             Paid: <span style="font-size:20px; color: red;">{{ $mtotalPaidDonors }}</span> |
+                                             Unpaid: <span style="font-size:20px; color: red;">{{ $munpaidDonorsCount }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -171,24 +171,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody  id="myTable_mahna">
+                                                @foreach($munpaidDonors ?? [] as $donor)
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td><button class="btn-danger">Not Paid</button></td>
+                                                    <td>{{ $donor->donor->name }}</td>
+                                                    <td>{{ $donor->donor->contact_no }}</td>
+
+                                                    <td>
+                                                        <button class="btn btn-danger btn-sm">
+                                                            <a class="text-white" href="{{ route('view.details', $donor->id) }}">View Details</a>
+                                                        </button>
+                                                    </td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td><button class="btn-danger">Unpaid</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td><button class="btn-danger">Unpaid</button></td>
-                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

@@ -66,7 +66,7 @@ class HomeController extends Controller
             $mtotalPaidDonors = $mtotalDonorsCount - $munpaidDonorsCount;
 
             // Pass variables to the view
-            return view("frontend.index", compact('unpaidDonors', 'totalPaidDonors','unpaidDonorsCount','totalDonorsCount', 'allDonors'));
+            return view("frontend.index", compact('unpaidDonors', 'totalPaidDonors','unpaidDonorsCount','totalDonorsCount', 'allDonors' ,'mfood_help_donners', 'munpaidDonors', 'munpaidDonorsCount', 'mtotalPaidDonors','mtotalDonorsCount','mfood_help_donners'));
         } catch (\Exception $e) {
             // Log the exception for debugging
             return $e->getMessage();
