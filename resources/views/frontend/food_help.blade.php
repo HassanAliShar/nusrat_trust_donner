@@ -166,7 +166,7 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                
+
                                                                                 <th>S.No</th>
                                                                                 <th>Name</th>
                                                                                 <th>Contact</th>
@@ -176,7 +176,7 @@
                                                                         <tbody  id="myTable">
                                                                             @foreach($donors ?? [] as $key => $row)
                                                                                 <tr>
-                                                                                   
+
                                                                                     <th scope="row">{{ $row->id ?? '' }}</th>
                                                                                     <td>{{ $row->name ?? 'Guest' }}</td>
                                                                                     <td>{{ $row->contact_no ?? '' }}</td>
@@ -396,18 +396,12 @@
                         </div>
                     </div>
                 </div>
-
-
- <!-- start Update  modal box -->
-
+            <!-- start Update  modal box -->
              <div class="modal fade" id="exampleModal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form action="{{ route('food_help.update') }}" method="post">
                                 @csrf
-
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Pay Food_Help Scheme</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -8,6 +8,7 @@ use App\Models\Payment;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class Food_helpController extends Controller
 {
@@ -79,5 +80,32 @@ class Food_helpController extends Controller
         $donors->contact_no= $request->contact_no;
         $donors->update();
         return redirect()->back()->with('message', 'Update  Successfully');
+    }
+
+    public function custom_sms_donors(Request $request)
+    {
+        $donors = Donor::all();
+        foreach ($donors as $donor) {
+            if($donor->contact_no != null){
+                $phone =  substr($donor->contact_no ?? '03062882501', 1);
+                $phone = '+92'.$phone;
+                $this->send_sms($phone, $donor, $request->message);
+            }
         }
+        return redirect()->back()->with('message', 'SMS Sent Successfully');
+    }
+
+    public function send_sms($phone, $donor, $message)
+    {
+            $text_message = "\nHello ".$donor->name." ".$message;
+            $response = Http::withHeaders([''
+            ])->post('https://api.veevotech.com/v3/sendsms', [
+                "hash" => "075f8a29b47e4466f4b634576b539ebf",
+                "receivernum" => $phone,
+                "medium" => 1,
+                "sendernum" => "Default",
+                "header" => '',
+                "textmessage" => $text_message
+            ]);
+    }
 }

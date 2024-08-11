@@ -15,9 +15,9 @@ use App\Http\Controllers\frontend\Pay_foodController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/add_donnor', [Food_helpController::class, 'index'])->name('add_donnor.index');
+Route::post('/donors/send/message', [Food_helpController::class, 'custom_sms_donors'])->name('donors.send.message');
 
 Route::get('/food-help/donners', [Pay_foodController::class, 'index'])->name('food.help.donners');
-
 Route::post('/pay_food/payments/store', [Pay_foodController::class, 'store_payments'])->name('pay_food.payments.store');
 Route::post('/pay_food/store', [Food_helpController::class, 'store'])->name('pay_food.store');
 Route::post('/pay_food/update', [Food_helpController::class, 'update'])->name('pay_food.update');

@@ -190,7 +190,6 @@
                                                      <td>{{ $row->donor->name ?? 'Guest' }}</td>
                                                      <td>{{ $row->donor->contact_no ?? '' }}</td>
                                                         <td>
-
                                                             <button type="button" onclick="document.getElementById('donner_id').value = {{ $row->donor->id }}" data-toggle="modal" data-target="#exampleModal_paid" class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>Paid</button>
                                                             <button type="button" data-toggle="modal"
                                                                 data-target="#exampleModal_update"
