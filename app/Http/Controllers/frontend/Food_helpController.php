@@ -4,6 +4,8 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
+use App\Models\FoodHelp;
+use App\Models\Mahanakifalat;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Exception;
@@ -89,7 +91,34 @@ class Food_helpController extends Controller
             if($donor->contact_no != null){
                 $phone =  substr($donor->contact_no ?? '03062882501', 1);
                 $phone = '+92'.$phone;
-                $this->send_sms($phone, $donor, $request->message);
+                $message = "\nHello ".$donor->name." ".$request->message;
+                $this->send_sms($phone, $donor, $message);
+            }
+        }
+        return redirect()->back()->with('message', 'SMS Sent Successfully');
+    }
+
+    public function send_sms_to_food_help_donors(){
+        $donors = FoodHelp::with('donor')->get();
+        foreach ($donors as $donor) {
+            if($donor->donor->contact_no != null){
+                $phone =  substr($donor->donor->contact_no ?? '03062882501', 1);
+                $phone = '+92'.$phone;
+                $message = "Assalam Alaikum ".$donor->donor->name." This is message from nusrat Truest you are supporting ".$donor->children ." children . donation for food help this is start of month please donate now. Thank you";
+                $this->send_sms($phone, $donor, $message);
+            }
+        }
+        return redirect()->back()->with('message', 'SMS Sent Successfully');
+    }
+
+    public function send_sms_to_mahana_kifalat_donors(){
+        $donors = Mahanakifalat::with('donor')->get();
+        foreach ($donors as $donor) {
+            if($donor->donor->contact_no != null){
+                $phone =  substr($donor->donor->contact_no ?? '03062882501', 1);
+                $phone = '+92'.$phone;
+                $message = "Assalam Alaikum ".$donor->donor->name." This is message from nusrat Truest you are supporting ".$donor->families ." families. donation for mahana kifalat this is start of month please donate now Thank you";
+                $this->send_sms($phone, $donor, $message);
             }
         }
         return redirect()->back()->with('message', 'SMS Sent Successfully');
@@ -97,15 +126,15 @@ class Food_helpController extends Controller
 
     public function send_sms($phone, $donor, $message)
     {
-            $text_message = "\nHello ".$donor->name." ".$message;
-            $response = Http::withHeaders([''
-            ])->post('https://api.veevotech.com/v3/sendsms', [
-                "hash" => "075f8a29b47e4466f4b634576b539ebf",
-                "receivernum" => $phone,
-                "medium" => 1,
-                "sendernum" => "Default",
-                "header" => '',
-                "textmessage" => $text_message
-            ]);
+        $text_message = $message;
+        $response = Http::withHeaders([''
+        ])->post('https://api.veevotech.com/v3/sendsms', [
+            "hash" => "075f8a29b47e4466f4b634576b539ebf",
+            "receivernum" => $phone,
+            "medium" => 1,
+            "sendernum" => "Default",
+            "header" => '',
+            "textmessage" => $text_message
+        ]);
     }
 }
