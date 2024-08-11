@@ -129,7 +129,7 @@ class Food_helpController extends Controller
         $text_message = $message;
         $response = Http::withHeaders([''
         ])->post('https://api.veevotech.com/v3/sendsms', [
-            "hash" => "075f8a29b47e4466f4b634576b539ebf",
+            "hash" => "dc848e0df14865701af756e424bed084",
             "receivernum" => $phone,
             "medium" => 1,
             "sendernum" => "Default",
