@@ -22,7 +22,7 @@ class MahanakifalatController extends Controller
                 ->toArray(); // Convert to array for easier comparison
 
             // Fetch all food help donors
-            $allDonors = FoodHelp::with('donor')->get();
+            $allDonors = Mahanakifalat::with('donor')->get();
 
             // Filter out donors who have paid for the current month
             $mahana_kifalat_donners = $allDonors->filter(function ($foodHelp) use ($paidDonorIds) {

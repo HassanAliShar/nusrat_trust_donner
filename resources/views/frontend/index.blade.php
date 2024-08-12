@@ -128,7 +128,7 @@
 
                                                     <td>
                                                         <button class="btn btn-danger btn-sm">
-                                                            <a class="text-white" href="{{ route('view.details', $donor->id) }}">View Details</a>
+                                                            <a class="text-white" href="{{ route('view.details', ['food_help',$donor->id]) }}">View Details</a>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -164,7 +164,6 @@
                                         <table class="table table table-sm">
                                             <thead  class="table-primary text-white">
                                                 <tr>
-                                                    <th>No. Child</th>
                                                     <th>Name</th>
                                                     <th>Contact</th>
                                                     <th>Status</th>
@@ -178,7 +177,7 @@
 
                                                     <td>
                                                         <button class="btn btn-danger btn-sm">
-                                                            <a class="text-white" href="{{ route('view.details', $donor->id) }}">View Details</a>
+                                                            <a class="text-white" href="{{ route('view.details', ['mahana_kifalat',$donor->id]) }}">View Details</a>
                                                         </button>
                                                     </td>
                                                 </tr>

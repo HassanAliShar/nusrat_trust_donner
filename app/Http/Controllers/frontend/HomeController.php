@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
 use App\Models\FoodHelp;
+use App\Models\Mahanakifalat;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,7 +49,7 @@ class HomeController extends Controller
                 ->toArray(); // Convert to array for easier comparison
 
             // Fetch all food help donors
-            $mallDonors = FoodHelp::with('donor')->get();
+            $mallDonors = Mahanakifalat::with('donor')->get();
 
             // Filter out donors who have paid for the current month
             $mfood_help_donners = $mallDonors->filter(function ($foodHelp) use ($mpaidDonorIds) {
