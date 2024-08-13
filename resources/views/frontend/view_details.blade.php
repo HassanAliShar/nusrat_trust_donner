@@ -76,7 +76,7 @@
                                                 <div class="card">
                                                     <div style="text-align:center;" class="card-header bg-primary">
                                                         <h5 class="card-header-text text-white"><button
-                                                                class="btn-danger">Food Help Scheme Donners</button>
+                                                                class="btn-danger">  Donner Payments</button>
                                                         </h5>
                                                     </div>
                                                     <div class="card-block accordion-block">

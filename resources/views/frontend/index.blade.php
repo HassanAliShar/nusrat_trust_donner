@@ -68,7 +68,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-8">
                                             <h4 class="text-c-red">{{ $mtotalDonorsCount ?? 00 }}</h4>
-                                            <h6 class="text-muted m-b-0">Mahana Kifalat Donners</h6>
+                                            <h6 class="text-muted m-b-0">Mahana Kifalat</h6>
                                         </div>
                                         <div class="col-4 text-right">
                                             <i class="fa fa-calendar-check-o f-28"></i>

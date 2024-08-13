@@ -94,14 +94,13 @@
                                                                             @foreach($food_help_donners ?? [] as $key => $row)
                                                                                 <tr>
                                                                                    
-                                                                                    <th scope="row">{{ $row->donor->id ?? '' }}</th>
+                                                                                    
                                                                                     <th>{{ $row->children ?? 0 }}</th>
                                                                                     <td>{{ $row->donor->name ?? 'Guest' }}</td>
                                                                                     <td>{{ $row->donor->contact_no ?? '' }}</td>
                                                                                     <td>
-                                                                                        <button type="button" onclick="document.getElementById('donner_id').value = {{ $row->donor->id }}" data-toggle="modal" data-target="#exampleModal_paid" class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>Paid</button>
-                                                                                         <button type="button"  onclick="document.getElementById('donner_id').value = {{ $row->donor->id }}" data-toggle="modal" data-target="#exampleModal_update" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square">UpDate</i></button>
-                                                                                        <button class="btn btn-danger btn-sm"><a class="text-white" href="{{ route('view.details',$row->donor->id) }}">View Details</a></button>
+                                                                                        
+                                                                                        <button class="btn btn-danger btn-sm"><a class="text-white" href="{{ route('view.details',['food_help', $row->donor->id]) }}">View Details</a></button>
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -110,7 +109,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
+                                                            </div>
                                                                 <!-- END SECTION FOR SHOW DATA NOT PAID -->
                                                             </div>
                                                         </div>

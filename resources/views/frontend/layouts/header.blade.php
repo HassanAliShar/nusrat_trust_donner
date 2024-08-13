@@ -186,12 +186,7 @@ $(document).ready(function(){
               </div>
           </nav>
 
-
-
-
-
-
-          <nav class="pcoded-navbar">
+          <nav class="pcoded-navbar mt-5">
             <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
             <div class="pcoded-inner-navbar main-menu">
                 <div class="">
